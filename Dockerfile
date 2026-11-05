@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY package*.json tsconfig.json ./
 
 # Install all dependencies (including devDependencies for build)
-RUN npm install
+RUN npm ci
 
 # Copy source code
 COPY src/ ./src/
