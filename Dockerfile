@@ -43,6 +43,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# Create temp directory for image processing (as root, owned by node)
+RUN mkdir -p /app/temp && chown -R node:node /app
+
 # Run as non-root user
 USER node
 
@@ -50,9 +53,6 @@ USER node
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=builder /app/node_modules ./node_modules
 COPY --chown=node:node --from=builder /app/dist ./dist
-
-# Create temp directory for image processing
-RUN mkdir -p /app/temp
 
 EXPOSE 8080
 
